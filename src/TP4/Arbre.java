@@ -1,79 +1,79 @@
 package TP4;
 
-import java.util.ArrayList;
+public class Arbre {
 
-public class Arbre<T> {
-    private T racine;
-    private ArrayList<Arbre<T>> enfants;
+    private Node racine;
 
     public Arbre() {
         this.racine = null;
-        this.enfants = null;
     }
 
-    public Arbre(T racine, ArrayList<Feuilles> feuilles) {
+    public Arbre(Node racine) {
         this.racine = racine;
-        this.enfants = enfants;
     }
 
-    public T getRacine() {
+    public Node getRacine() {
         return racine;
     }
 
-    public void setRacine(T racine) {
+    public void setRacine(Node racine) {
         this.racine = racine;
     }
 
-    public ArrayList<Arbre<T>> getEnfants() {
-        return enfants;
-    }
-
-    public void setEnfants(ArrayList<Arbre<T>> enfants) {
-        this.enfants = enfants;
-    }
-
-    public void parcours_prefix() {
-
-        System.out.println(racine);
-
-        for (Arbre<T> enfant : enfants) {
-            enfant.parcours_prefix();
+    public static StringBuilder parcours_prefix(Node racine) {
+        if (racine == null) {
+            return null;
         }
+        StringBuilder sb = new StringBuilder();
+        sb.append(racine.getElement());
+        sb.append(parcours_prefix(racine.getNext()));
+        sb.append(parcours_prefix(racine.getNextNodeDroite()));
+
+        return sb;
     }
 
-    private static class Feuilles<T> {
-        private ArrayList<T> element;
-        private Feuilles nextFeuilles;
+    private static class Node {
+        private Integer element;
+        private Node next;
+        private Node droite;
 
-        public Feuilles() {
-            this.element = null;
-            this.nextFeuilles = null;
-        }
-
-        public Feuilles(ArrayList<T> element, Feuilles nextChildren) {
+        public Node(Integer element, Node next) {
             this.element = element;
-            this.nextFeuilles = nextChildren;
+            this.next = next;
         }
 
-        public ArrayList<T> getElement() {
+        public Node(Integer element) {
+            this.element = element;
+        }
+
+        public Integer getElement() {
             return element;
         }
 
-        public void setElement(ArrayList<T> element) {
+        public void setElement(Integer element) {
             this.element = element;
         }
 
-        public Feuilles getNextChildren() {
-            return nextFeuilles;
+        public Node getNext() {
+            return next;
         }
 
-        public void setNextChildren(Feuilles nextChildren) {
-            this.nextFeuilles = nextChildren;
+        public Node getNextNodeDroite() {
+            return droite;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+        public void setNextNodeDroite(Node droite) {
+            this.droite = droite;
         }
     }
 
     public static void main(java.lang.String[] args) {
         Arbre monArbre = new Arbre();
+
 
     }
 }
