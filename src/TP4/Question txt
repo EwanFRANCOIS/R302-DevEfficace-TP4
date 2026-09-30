@@ -11,3 +11,9 @@ Question 3/
 Exemple de Parcours  :
 
 Il y a 3 parcours différents d'arbres : il y a le parcours Prefix, Postfix et Infix.
+
+
+Question 4/
+
+Le nom de la méthode de parcours qui commence par la racine est le Prefix (on commence par la racine
+puis on regarde les enfants).
