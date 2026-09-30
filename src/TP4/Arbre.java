@@ -3,31 +3,52 @@ package TP4;
 import java.util.List;
 
 public class Arbre<T> {
-    private T data;
-    private List<String> children;
+
+    private Feuilles root;
 
     public Arbre() {
+        this.root = null;
+    }
+
+    public Arbre(Feuilles root) {
+        this.root = root;
+    }
+
+    private static class Feuilles<T> {
+        private List<T> element;
+        private Feuilles nextChildren;
+
+        public Feuilles() {
+            this.element = null;
+            this.nextChildren = null;
+        }
+
+        public Feuilles(List<T> element, Feuilles nextChildren) {
+            this.element = element;
+            this.nextChildren = nextChildren;
+        }
+
+        public List<T> getElement() {
+            return element;
+        }
+
+        public void setElement(List<T> element) {
+            this.element = element;
+        }
+
+        public Feuilles getNextChildren() {
+            return nextChildren;
+        }
+
+        public void setNextChildren(Feuilles nextChildren) {
+            this.nextChildren = nextChildren;
+        }
+
 
     }
 
-    public Arbre(T data, List<String> children) {
-        this.data = data;
-        this.children = children;
-    }
+    public static void main(String[] args) {
 
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public List<String> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<String> children) {
-        this.children = children;
     }
 }
+
