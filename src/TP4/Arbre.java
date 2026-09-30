@@ -32,25 +32,32 @@ public class Arbre {
         return sb;
     }
 
+    @Override
+    public String toString() {
+        return "Arbre{" +
+                "racine=" + racine +
+                '}';
+    }
+
     private static class Node {
-        private Integer element;
+        private String element;
         private Node next;
         private Node droite;
 
-        public Node(Integer element, Node next) {
+        public Node(String element, Node next) {
             this.element = element;
             this.next = next;
         }
 
-        public Node(Integer element) {
+        public Node(String element) {
             this.element = element;
         }
 
-        public Integer getElement() {
+        public String getElement() {
             return element;
         }
 
-        public void setElement(Integer element) {
+        public void setElement(String element) {
             this.element = element;
         }
 
@@ -72,9 +79,22 @@ public class Arbre {
     }
 
     public static void main(java.lang.String[] args) {
-        Arbre monArbre = new Arbre();
+        Node n5 = new Node("5");
+        Node n2 = new Node("2");
+        Node n8 = new Node("8");
 
+        Node plus = new Node("+", n5);
+        plus.setNextNodeDroite(n2);
 
+        Node fois = new Node("*", plus);
+        fois.setNextNodeDroite(n8);
+
+        Arbre monArbre = new Arbre(fois);
+
+        System.out.println("Racine : " + monArbre.getRacine().getElement());
+        System.out.println("Gauche : " + monArbre.getRacine().getNext().getElement());
+        System.out.println("Droite : " + monArbre.getRacine().getNextNodeDroite().getElement());
+        System.out.println("Prefix : " + Arbre.parcours_prefix(monArbre.getRacine()));
     }
 }
 
