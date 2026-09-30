@@ -1,33 +1,39 @@
 package TP4;
 
-public class Arbre {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Node racine;
+public class Arbre<T> {
+
+    private Node<T> racine;
 
     public Arbre() {
         this.racine = null;
     }
 
-    public Arbre(Node racine) {
+    public Arbre(Node<T> racine) {
         this.racine = racine;
     }
 
-    public Node getRacine() {
+    public Node<T> getRacine() {
         return racine;
     }
 
-    public void setRacine(Node racine) {
+    public void setRacine(Node<T> racine) {
         this.racine = racine;
     }
 
-    public static StringBuilder parcours_prefix(Node racine) {
+    public static <T> StringBuilder parcours_prefix(Node<T> racine) {
         if (racine == null) {
             return null;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(racine.getElement());
-        sb.append(parcours_prefix(racine.getNext()));
-        sb.append(parcours_prefix(racine.getNextNodeDroite()));
+        sb.append(racine.getElement()).append(" ");
+
+        for (Node<T> enfant : racine.getfils()) {
+            sb.append(parcours_prefix(enfant));
+        }
+        sb.append(racine.getElement()).append(" ");
 
         return sb;
     }
@@ -39,62 +45,64 @@ public class Arbre {
                 '}';
     }
 
-    private static class Node {
-        private String element;
-        private Node next;
-        private Node droite;
+    private static class Node<T> {
+        private T element;
+        private List<Node<T>> fils;
 
-        public Node(String element, Node next) {
+        public Node(T element) {
             this.element = element;
-            this.next = next;
+            this.fils = new ArrayList<>();
         }
 
-        public Node(String element) {
-            this.element = element;
-        }
-
-        public String getElement() {
+        public T getElement() {
             return element;
         }
 
-        public void setElement(String element) {
+        public void setElement(T element) {
             this.element = element;
         }
 
-        public Node getNext() {
-            return next;
+        public List<Node<T>> getfils() {
+            return fils;
         }
 
-        public Node getNextNodeDroite() {
-            return droite;
+        public void setfils(Node<T> f) {
+            fils.add(f);
         }
 
-        public void setNext(Node next) {
-            this.next = next;
-        }
-
-        public void setNextNodeDroite(Node droite) {
-            this.droite = droite;
+        @Override
+        public String toString() {
+            return "Node{" + element + ", fils=" + fils + "}";
         }
     }
 
     public static void main(java.lang.String[] args) {
-        Node n5 = new Node("5");
-        Node n2 = new Node("2");
-        Node n8 = new Node("8");
+      /* Résultat attendus :
+                 A
+               / | \
+              B  C  D
+             / \
+            E   F
+       */
 
-        Node plus = new Node("+", n5);
-        plus.setNextNodeDroite(n2);
+        Node<String> a = new Node<>("A");
+        Node<String> b = new Node<>("B");
+        Node<String> c = new Node<>("C");
+        Node<String> d = new Node<>("D");
+        Node<String> e = new Node<>("E");
+        Node<String> f = new Node<>("F");
 
-        Node fois = new Node("*", plus);
-        fois.setNextNodeDroite(n8);
+        a.setfils(b);
+        a.setfils(c);
+        a.setfils(d);
+        b.setfils(e);
+        b.setfils(f);
 
-        Arbre monArbre = new Arbre(fois);
+        Arbre<String> monArbre = new Arbre<>(a);
 
-        System.out.println("Racine : " + monArbre.getRacine().getElement());
-        System.out.println("Gauche : " + monArbre.getRacine().getNext().getElement());
-        System.out.println("Droite : " + monArbre.getRacine().getNextNodeDroite().getElement());
-        System.out.println("Prefix : " + Arbre.parcours_prefix(monArbre.getRacine()));
+        System.out.println("Racine  : " + monArbre.getRacine().getElement());
+        System.out.println("Nb fils : " + monArbre.getRacine().getfils().size());
+        System.out.println("Prefix  : " + parcours_prefix(monArbre.getRacine()));
     }
 }
 
